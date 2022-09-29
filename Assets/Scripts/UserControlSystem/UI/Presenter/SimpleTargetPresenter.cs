@@ -1,0 +1,34 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+public class SimpleTargetPresenter : MonoBehaviour, ITargetInfo
+{
+    [SerializeField] ISelectable _target;
+
+    [SerializeField] Image _selectedImage;
+    [SerializeField] Image _healthBgr;
+    [SerializeField] Image _healthFill;
+
+    public void SetTarget(ISelectable target)
+    {
+        _target = target;
+
+        UpdateInfo();
+    }
+
+    public void UpdateInfo()
+    {
+        if (_target.Health <= 0)
+        {
+            _target = null;
+            Destroy(gameObject);
+            return;
+        }
+
+        _selectedImage.sprite = _target.Icon;
+        _healthFill.rectTransform.localScale = new Vector3(_target.Health / _target.MaxHealth, 1, 1);
+        Color color = Color.Lerp(Color.red, Color.green, _target.Health / _target.MaxHealth);
+        _healthBgr.color = color * 0.5f;
+        _healthFill.color = color;
+    }
+}
