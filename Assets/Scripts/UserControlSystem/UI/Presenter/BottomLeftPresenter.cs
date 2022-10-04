@@ -12,34 +12,35 @@ public class BottomLeftPresenter : MonoBehaviour
     private void Start()
     {
         SelectManager.OnSelected += OnSelected;
-        OnSelected(new ISelectable[0]);
+        OnSelected(null);
     }
 
-    public void OnSelected(ISelectable[] targets)
+    public void OnSelected(ISelectable target)
     {
-        if (targets == null || targets.Length == 0)
+        if (target == null)
         {
             _soloTargetPanel.gameObject.SetActive(false);
-            _groupTargetPanel.gameObject.SetActive(false);
+            //_groupTargetPanel.gameObject.SetActive(false);
         }
         else
         {
-            _soloTargetPanel.gameObject.SetActive(targets.Length == 1);
-            _groupTargetPanel.gameObject.SetActive(targets.Length != 1);
+            _soloTargetPanel.gameObject.SetActive(true);
+            //_groupTargetPanel.gameObject.SetActive(target.Length != 1);
 
-            if (targets.Length == 1) _soloTargetPanel.SetTarget(targets[0]);
-            else
-            {
-                for (int i = _targetsInfo.Count - 1; i >= 0; i--)
-                {
-                    Destroy(_targetsInfo[i].gameObject);
-                }
-                foreach (var target in targets)
-                {
-                    _targetsInfo.Add(Instantiate(_simpleTargetPrefab, _groupTargetPanel));
-                    _targetsInfo[_targetsInfo.Count - 1].SetTarget(target);
-                }
-            }
+            //if (target.Length == 1) 
+                _soloTargetPanel.SetTarget(target);
+            //else
+            //{
+            //    for (int i = _targetsInfo.Count - 1; i >= 0; i--)
+            //    {
+            //        Destroy(_targetsInfo[i].gameObject);
+            //    }
+            //    foreach (var target in target)
+            //    {
+            //        _targetsInfo.Add(Instantiate(_simpleTargetPrefab, _groupTargetPanel));
+            //        _targetsInfo[_targetsInfo.Count - 1].SetTarget(target);
+            //    }
+            //}
         }
     }
 

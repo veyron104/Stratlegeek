@@ -7,5 +7,5 @@ public interface ISelectable
     float MaxHealth { get; }
     Sprite Icon { get; }
 
-    void SwitchSelection();
+    void SwitchSelection(ISelectable selectable);
 }

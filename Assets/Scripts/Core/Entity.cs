@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+public enum EntityType { Unit, Factory}
 
 public class Entity : MonoBehaviour, ISelectable
 {
@@ -23,8 +23,10 @@ public class Entity : MonoBehaviour, ISelectable
         _health = _maxHealth;
     }
 
-    public void SwitchSelection()
+    public void SwitchSelection(ISelectable selectable)
     {
-        _selectionSwitcher.SetActive(!_selectionSwitcher.activeSelf);
+        if (!Equals(selectable)) SelectManager.OnSelected -= SwitchSelection;
+
+        _selectionSwitcher.SetActive(Equals(selectable));
     }
 }
